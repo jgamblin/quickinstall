@@ -29,13 +29,7 @@ apt-get update && apt-get dist-upgrade -y
 #
 #Install stuff I use all the time
 #
-sudo apt-get install -y build-essential checkinstall libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev python-dev python-setuptools python-numpy python-scipy nmap ntop docker.io unattended-upgrades git 
-  
-#
-#Configuring Fail2Ban
-#
-
-apt-get install fail2ban
+sudo apt-get install -y build-essential checkinstall libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev python-dev python-setuptools python-numpy python-scipy nmap ntop docker.io unattended-upgrades git fail2ban
 
 #
 #PCAP Everything
