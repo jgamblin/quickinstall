@@ -1,0 +1,81 @@
+---
+- name: Bootstrap
+  hosts: all
+  gather_facts: false
+  become: yes
+
+  tasks:
+    - name: Install Aptitude and Python
+      raw: apt-get -y install aptitude python python-apt python-simplejson
+
+
+- name: Quick Install
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Upgrade everything
+      apt:
+        upgrade: full
+        update_cache: yes
+
+    - name: Install things
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - build-essential
+        - checkinstall
+        - docker.io
+        - fail2ban
+        - git
+        - git-core
+        - libbz2-dev
+        - libc6-dev
+        - libgdbm-dev
+        - libncursesw5-dev
+        - libreadline-gplv2-dev
+        - libsqlite3-dev
+        - libssl-dev
+        - nikto
+        - nmap
+        - nodejs
+        - python-dev
+        - python-numpy
+        - python-scipy
+        - python-setuptools
+        - tk-dev
+        - unattended-upgrades
+        - ufw
+
+    - name: Deny incoming
+      ufw:
+        policy: deny
+        direction: incoming
+
+    - name: Allow outgoing
+      ufw:
+        policy: allow
+        direction: outgoing
+
+    - name: Open SSH port
+      ufw:
+        rule: allow
+        name: OpenSSH
+        port: 22
+
+    - name: Enable firewall
+      ufw:
+        state: enabled
+
+    - name: Configure timezone
+      command: timedatectl set-timezone UTC
+
+    - name: Install Ruby GPG keys
+      command: gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+
+    - name: Install Ruby
+      shell: curl -L https://get.rvm.io | bash -s stable --ruby
+
+    - name: PCAP everything
+      command: docker run -v ~/pcap:/pcap --net=host -d jgamblin/tcpdump
