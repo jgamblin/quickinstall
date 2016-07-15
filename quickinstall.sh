@@ -1,4 +1,8 @@
 #!/bin/bash
+# Copyright 2016, jgamblin, released under the MIT License 
+# See https://github.com/jgamblin/quickinstall/blob/master/LICENSE for the
+# complete license text
+# Source code at https://github.com/jgamblin/quickinstall
 
 # Upgrade installed packages to latest
 echo -e "\nRunning a package upgrade...\n"
