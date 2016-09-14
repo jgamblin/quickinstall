@@ -23,6 +23,10 @@ ufw allow ssh
 sed -i.bak 's/ENABLED=no/ENABLED=yes/g' /etc/ufw/ufw.conf
 chmod 0644 /etc/ufw/ufw.conf
 
+#Log ufw to separate file
+sed -i '/~/s/^#//g' /etc/rsyslog.d/20-ufw.conf
+/etc/init.d/rsyslog restart
+
 # set timezone to UTC
 echo -e "\nUpdating Timezone to UTC...\n"
 sudo timedatectl set-timezone UTC
