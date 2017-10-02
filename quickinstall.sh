@@ -29,6 +29,8 @@ sudo timedatectl set-timezone UTC
 
 #Install Ruby
 echo -e "\nInstalling Ruby...\n"
+apt-get -qq install gnupg2 -y
+curl -sSL https://rvm.io/mpapis.asc | gpg --import -
 curl -L https://get.rvm.io | bash -s stable --ruby
 
 #PCAP Everything
