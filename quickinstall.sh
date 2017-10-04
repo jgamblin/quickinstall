@@ -11,7 +11,7 @@ apt-get -qq update && apt-get -qq dist-upgrade
 
 #Install stuff I use all the time
 echo -e "\nInstalling default packages...\n"
-apt-get -qq install build-essential checkinstall fail2ban git git-core libbz2-dev libc6-dev libgdbm-dev libncursesw5-dev libreadline-gplv2-dev libsqlite3-dev libssl-dev nikto nmap nodejs python-dev python-numpy python-scipy python-setuptools tk-dev unattended-upgrades curl ufw
+apt-get -qq install build-essential checkinstall fail2ban git git-core libbz2-dev libc6-dev libgdbm-dev libncursesw5-dev libreadline-gplv2-dev libsqlite3-dev libssl-dev nikto nmap python-dev python-numpy python-scipy python-setuptools tk-dev unattended-upgrades curl ufw
 curl -L https://get.docker.com | sh
 
 #Install and configure firewall
@@ -19,6 +19,11 @@ echo -e "\nConfiguring firewall...\n"
 ufw default deny incoming
 ufw default allow outgoing
 ufw allow ssh
+
+#Install NodeJS
+curl -sL https://deb.nodesource.com/setup_8.x | bash -
+apt-get install -qq -y nodejs
+
 
 sed -i.bak 's/ENABLED=no/ENABLED=yes/g' /etc/ufw/ufw.conf
 chmod 0644 /etc/ufw/ufw.conf
