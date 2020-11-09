@@ -1,39 +1,56 @@
 #!/bin/bash
-# Copyright 2016, jgamblin, released under the MIT License
-# See https://github.com/jgamblin/quickinstall/blob/master/LICENSE for the
-# complete license text
-# Source code at https://github.com/jgamblin/quickinstall
 
 # Upgrade installed packages to latest
-echo -e "\nRunning a package upgrade...\n"
-apt-get -qq update && apt-get -qq dist-upgrade
+sudo DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get -qq dist-upgrade
 
+#  Java Fixes
+sudo DEBIAN_FRONTEND=noninteractive add-apt-repository -y ppa:linuxuprising/java
+echo debconf shared/accepted-oracle-license-v1-2 select true | sudo debconf-set-selections
+echo debconf shared/accepted-oracle-license-v1-2 seen true | sudo debconf-set-selections
 
 #Install stuff I use all the time
-echo -e "\nInstalling default packages...\n"
-apt-get -qq install build-essential checkinstall fail2ban git git-core libbz2-dev libc6-dev libgdbm-dev libncursesw5-dev libreadline-gplv2-dev libsqlite3-dev libssl-dev nikto nmap nodejs python-dev python-numpy python-scipy python-setuptools tk-dev unattended-upgrades curl ufw
+sudo DEBIAN_FRONTEND=noninteractive apt-get -qq install -y \
+build-essential \
+curl \
+jq \
+nmap \
+npm \
+oracle-java15-installer \
+oracle-java15-set-default \
+python \
+python-dev \
+python3 \
+python3-dev \
+python3-dev \
+python3-pip \
+ruby-full \
+software-properties-common \
+tor \
+tree \
+tshark \
+ufw \
+unattended-upgrades \
+unrar \
+unzip \
+wget \
+wireshark 
+
+#Install Docker
 curl -L https://get.docker.com | sh
+usermod -aG docker ubuntu
 
-#Install and configure firewall
-echo -e "\nConfiguring firewall...\n"
-ufw default deny incoming
-ufw default allow outgoing
-ufw allow ssh
+#Install Doecker Compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 
-sed -i.bak 's/ENABLED=no/ENABLED=yes/g' /etc/ufw/ufw.conf
-chmod 0644 /etc/ufw/ufw.conf
-
-# set timezone to UTC
-echo -e "\nUpdating Timezone to UTC...\n"
-sudo timedatectl set-timezone UTC
-
-#Install Ruby
-echo -e "\nInstalling Ruby...\n"
-apt-get -qq install gnupg2 -y
-curl -sSL https://rvm.io/mpapis.asc | gpg --import -
-curl -L https://get.rvm.io | bash -s stable --ruby
-source /usr/local/rvm/scripts/rvm
+#Install Portainer
+#Change Password Right Away. 
+docker volume create portainer_data
+docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
 
 #PCAP Everything
-echo -e "\nRunning docker: pcap...\n"
-docker run -v ~/pcap:/pcap --net=host -d jgamblin/tcpdump
+docker run -v ~/pcap:/pcap --name=PCAP --restart=always --net=host -d jgamblin/tcpdump
+
+# set timezone to UTC
+sudo timedatectl set-timezone UTC
+
