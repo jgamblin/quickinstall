@@ -1,6 +1,6 @@
 # Quickinstall
 
-A Shell Script To Take Care Of Ubuntu Basic VPC Setup.
+A Shell Script To Take Care Of Ubuntu Basic VPC Setup For Ubuntu 20.04
 
 - Update OS
 - Install Useful Software
