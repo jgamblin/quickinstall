@@ -35,6 +35,11 @@ unzip \
 wget \
 wireshark 
 
+#Install OSQuery
+echo "deb [arch=amd64] https://pkg.osquery.io/deb deb main" | sudo tee /etc/apt/sources.list.d/osquery.list
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B
+sudo DEBIAN_FRONTEND=noninteractive apt-get -qq update && apt-get -qq install osquery
+
 #Install Docker
 curl -L https://get.docker.com | sh
 usermod -aG docker ubuntu
