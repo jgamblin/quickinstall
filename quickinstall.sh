@@ -56,6 +56,10 @@ docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /va
 #PCAP Everything
 docker run -v ~/pcap:/pcap --name=PCAP --restart=always --net=host -d jgamblin/tcpdump
 
+#Log ufw to separate file
+sed -i '/~/s/^#//g' /etc/rsyslog.d/20-ufw.conf
+/etc/init.d/rsyslog restart
+
 # set timezone to UTC
 sudo timedatectl set-timezone UTC
 
