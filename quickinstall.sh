@@ -50,5 +50,9 @@ sudo chmod +x /usr/local/bin/docker-compose
 #Install Jupyter
 sudo pip3 install jupyter
 
+#Log ufw to separate file
+sed -i '/~/s/^#//g' /etc/rsyslog.d/20-ufw.conf
+/etc/init.d/rsyslog restart
+
 # set timezone to UTC
 sudo timedatectl set-timezone UTC
