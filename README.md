@@ -6,7 +6,6 @@ A Shell Script To Take Care Of Ubuntu Basic VPC Setup For Ubuntu 20.04
 - Install Useful Software
 - Install OSQUERY
 - Install Docker
-- Install Portainer.io
-- Capture All Traffic in PCAP Files (~/PCAP)
+- Install Jupyter
 
-Updated: November 9th, 2020.
+Updated: December 19th, 2020
