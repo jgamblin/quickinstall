@@ -8,20 +8,27 @@ name: Lint Code Base
 
 #
 # Documentation:
-# https://help.github.com/en/articles/workflow-syntax-for-github-actions
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
 #
 
 #############################
 # Start the job on all push #
 #############################
 on:
-  push
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+permissions:
+  contents: read
+  statuses: write
 
 ###############
 # Set the Job #
 ###############
 jobs:
-  build:
+  lint:
     # Name the Job
     name: Lint Code Base
     # Set the agent to run on
@@ -35,14 +42,19 @@ jobs:
       # Checkout the code base #
       ##########################
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          # Full git history is needed to get a proper list of changed files
+          fetch-depth: 0
+          persist-credentials: false
 
       ################################
       # Run Linter against code base #
       ################################
       - name: Lint Code Base
-        uses: docker://github/super-linter:v3
+        uses: super-linter/super-linter@v8
         env:
-          VALIDATE_ALL_CODEBASE: true 
+          VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LINTER_RULES_PATH: /
