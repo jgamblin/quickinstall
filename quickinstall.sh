@@ -10,29 +10,29 @@ echo debconf shared/accepted-oracle-license-v1-2 seen true | sudo debconf-set-se
 
 #Install stuff I use all the time
 sudo DEBIAN_FRONTEND=noninteractive apt-get -qq install -y \
-build-essential \
-curl \
-jq \
-nmap \
-npm \
-oracle-java15-installer \
-oracle-java15-set-default \
-python \
-python-dev \
-python3 \
-python3-dev \
-python3-pip \
-ruby-full \
-software-properties-common \
-tor \
-tree \
-tshark \
-ufw \
-unattended-upgrades \
-unrar \
-unzip \
-wget \
-wireshark 
+	build-essential \
+	curl \
+	jq \
+	nmap \
+	npm \
+	oracle-java15-installer \
+	oracle-java15-set-default \
+	python \
+	python-dev \
+	python3 \
+	python3-dev \
+	python3-pip \
+	ruby-full \
+	software-properties-common \
+	tor \
+	tree \
+	tshark \
+	ufw \
+	unattended-upgrades \
+	unrar \
+	unzip \
+	wget \
+	wireshark
 
 #Install OSQuery
 echo "deb [arch=amd64] https://pkg.osquery.io/deb deb main" | sudo tee /etc/apt/sources.list.d/osquery.list
